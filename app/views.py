@@ -5,15 +5,11 @@ from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth.models import User
-from rest_framework import viewsets
 from rest_framework import status
 from .models import Student
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
 
-
+@csrf_exempt
 @api_view(['POST', 'GET'])
 def home(request, code):
     if request.method == 'GET':
@@ -30,6 +26,7 @@ def home(request, code):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
+@csrf_exempt
 @api_view(['POST', 'GET'])
 def register(request):
     if request.method == 'GET':
@@ -70,6 +67,7 @@ def register(request):
         return Response(srlzr.data, status=status.HTTP_201_CREATED)
 
 
+@csrf_exempt
 @api_view(['POST', 'GET'])
 def login(request):
     if request.method == 'GET':
