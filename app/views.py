@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from .serializers import UserSerializer, TokenSerializer, StudentSerializer
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -9,7 +9,7 @@ from rest_framework import status
 from .models import Student
 
 
-@csrf_exempt
+@ensure_csrf_cookie
 @api_view(['POST', 'GET'])
 def home(request, code):
     if request.method == 'GET':
@@ -26,7 +26,7 @@ def home(request, code):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-@csrf_exempt
+@ensure_csrf_cookie
 @api_view(['POST', 'GET'])
 def register(request):
     if request.method == 'GET':
@@ -67,7 +67,7 @@ def register(request):
         return Response(srlzr.data, status=status.HTTP_201_CREATED)
 
 
-@csrf_exempt
+@ensure_csrf_cookie
 @api_view(['POST', 'GET'])
 def login(request):
     if request.method == 'GET':
