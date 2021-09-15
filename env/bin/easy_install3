@@ -1,0 +1,8 @@
+#!/mnt/7b8ec6c5-5901-4298-92f8-1b5320c0b186/Projects/Django/sysart/sysartbackend/env/bin/python
+# -*- coding: utf-8 -*-
+import re
+import sys
+from setuptools.command.easy_install import main
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
+    sys.exit(main())
