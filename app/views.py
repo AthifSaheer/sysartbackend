@@ -43,6 +43,10 @@ def register(request):
         password = request.data['password']
 
         if request.data['code'] == "sysartb":
+            if User.objects.using('sysartb').filter(username=username).exists():
+                data = {"already exist" : "already exist"}
+                return Response(data, status=status.HTTP_201_CREATED)
+
             user = User.objects.using('sysartb').create(username=username, email=email, password=password)
             auth_login(request, user)
 
@@ -50,6 +54,9 @@ def register(request):
             srlzr = TokenSerializer(token)
 
         else:
+            if User.objects.filter(username=username).exists():
+                data = {"already exist" : "already exist"}
+                return Response(data, status=status.HTTP_201_CREATED)
             user = User()
             user.username = username
             user.email = email
@@ -90,15 +97,8 @@ def login(request):
                 srlzr = TokenSerializer(token)
 
         except User.DoesNotExist:
-            # count = user.count()
-            # if count < 1:
             data = {"nouser" : "nouser"}
             return Response(data, status=status.HTTP_201_CREATED)
 
         return Response(srlzr.data, status=status.HTTP_201_CREATED)
 
-@api_view(['POST', 'GET'])
-def logout(request):
-    print("---lgot---", request.data)
-    auth_logout(request)
-    return Response(status=status.HTTP_201_CREATED)

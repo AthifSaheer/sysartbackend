@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -63,7 +64,7 @@ ROOT_URLCONF = 'sysartbackend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, './build')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -81,32 +82,6 @@ WSGI_APPLICATION = 'sysartbackend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-# DATABASES = {
-#    'default': {},
-#    'sysarta': {
-#        'ENGINE': 'django.db.backends.postgresql',
-#        'NAME': 'sysarta',
-#        'USER': 'sysart',
-#        'PASSWORD': 'sysart',
-#        'HOST': 'localhost',
-#        'PORT': '5432',
-#    },
-#    'sysartb': {
-#        'ENGINE': 'django.db.backends.postgresql',
-#        'NAME': 'sysartb',
-#        'USER': 'sysart',
-#        'PASSWORD': 'sysart',
-#        'HOST': 'localhost',
-#        'PORT': '5432',
-#    }
-# }
 
 DATABASES = {
     'default': {
@@ -169,3 +144,6 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, './build/static')]
